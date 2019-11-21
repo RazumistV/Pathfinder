@@ -8,10 +8,12 @@ char *mx_file_to_str(const char *filename) {
     char *str;
     
 	if (read(fd, (void *)0, 0) < 0) {
-        return 0;
+        return NULL;
+        close(fd);
     }
     else if (fd == -1) {
-        return 0;
+        return NULL;
+        close(fd);
     }
     else {
 		while (read(fd, &buf, 1)) {
