@@ -1,34 +1,38 @@
 #include "inc/libmx.h"
 #include "stdio.h"
 
-int main(int ac, char **av) {
-    char *file = NULL; // file contain
-    // char **islands; 
-	int PointIslands = 0; // apex
-    char **range;
-    int n = 0;
 
-    file = mx_file_to_str(av[1]);
-    PointIslands = mx_atoi(&file[0]);
+
+int **matrix(const char *file) {
+    int **range = NULL;
+
+    int PointIslands = mx_atoi(mx_file_to_str(file));
+    // file = mx_file_to_str(av[1]);
+    // PointIslands = mx_atoi(&file[0]);
     // char **islands = mx_strsplit(file, '\n');
-    if (ac > 0) {
-        range = (char**)malloc(sizeof(char *) * PointIslands);
-        for (int i = 0; i < PointIslands ; i++) {
-            range[i] = (char *)malloc(sizeof(char *) * PointIslands);
-            for (int j = 0; j < PointIslands; j++) {
-                range[i][j] = '1';
-            }
+    printf("matrix = %d\n", PointIslands);
+    range = (int **)malloc(sizeof(int *) * PointIslands);
+    for (int i = 0; i < PointIslands ; i++) {
+        range[i] = (int *)malloc(sizeof(int *) * PointIslands);
+        for (int j = 0; j < PointIslands; j++) {
+            range[i][j] = -1;
         }
-        int d = 0;
-        printf("matrix =\n");
-        while (range[d])
-            printf("        %s\n", range[d++]);
     }
+    return range;
 }
-            
-     
 
-        //printf("point = %d", PointIslands);
+int main(int ac, char **av) {
+    int **range;
+    int **res = matrix(av[1]);
+
+    
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++)
+            printf("  %d", res[i][j]);
+        printf("\n");
+    }
+}       
+    //printf("point = %d", PointIslands);
     // error case
     // if (ac > 2)
     //     mx_printerr("usage: ./pathfinder [filename]");
