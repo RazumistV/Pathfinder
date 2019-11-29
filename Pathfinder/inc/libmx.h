@@ -11,7 +11,14 @@
 typedef struct	s_list {
 	void			*data;
 	struct s_list	*next;
+	int count;
 }				t_list;
+
+struct s_island {
+	char **points;
+	int count;
+};
+
 
 int				mx_strcmp(const char *s1, const char *s2);
 int				mx_binary_search(char **arr, int size, const char *s, int *count);

@@ -1,29 +1,52 @@
 #include "inc/libmx.h"
 
-// char **mx_parsarray(char *str) {
+struct s_island {
+	char **points;
+	int count;
+};
 
-
-// 	return islands;
+// static void *mx_glist(char **str, int count) {
+// 	t_list *pl = *str;
+//  	t_list *node = mx_create_node(str);
+ 
+//     if (pl == NULL) {
+//     	*str = node;
+//         return ;
+//     }
+//     while (pl->next != NULL) {
+//         pl = pl->next;
+//     }
+//     pl->next = node;
 // }
 
+char **mx_parsarray(char *str) {
+	char *file = NULL;
+	char **perenos = NULL; 
+	char **minus = NULL;
+	char **zap = NULL;
+
+	file = mx_file_to_str(str);
+	perenos = mx_strsplit(file, '\n');
+	// minus = mx_strsplit(file, '-');
+	// zap = mx_strsplit(file, ',');
+
+	return perenos;
+}
+
 int main(int ac, char **av) {
-	char **anyway = NULL;
-	char *file = NULL; 
-	char **dist = NULL;
-	char **point = NULL;
-	file = mx_file_to_str(av[1]);
-	dist = mx_strsplit(file, '\n');
+	char **dist = mx_parsarray(av[1]);
 
 	for (int i = 1; dist[i]; i++) 
-    	printf(" dist = %s\n", dist[i]);
+    	printf("%\n", dist[i]);
+
     printf("********************************\n");
 
-	point = mx_strsplit(file, '-');
+	char **point = mx_parsarray(av[1]);
     for (int i = 1; point[i]; i++) 
-    	printf(" point = %s\n", point[i]);
-    printf("********************************\n");
+    	printf("%s\n", point[i]);
+//     printf("********************************\n");
 
-    anyway = mx_strsplit(file, ',');
-    for (int i = 1; anyway[i]; i++) 
-    	printf(" point = %s\n", point[i]);
+//     anyway = mx_strsplit(file, ',');
+//     for (int i = 1; anyway[i]; i++) 
+//     	printf(" point = %s\n", point[i]);
 }

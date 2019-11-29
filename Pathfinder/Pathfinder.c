@@ -7,9 +7,6 @@ int **matrix(const char *file) {
     int **range = NULL;
 
     int PointIslands = mx_atoi(mx_file_to_str(file));
-    // file = mx_file_to_str(av[1]);
-    // PointIslands = mx_atoi(&file[0]);
-    // char **islands = mx_strsplit(file, '\n');
     printf("matrix = %d\n", PointIslands);
     range = (int **)malloc(sizeof(int *) * PointIslands);
     for (int i = 0; i < PointIslands ; i++) {
