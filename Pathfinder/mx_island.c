@@ -1,43 +1,64 @@
 #include "inc/libmx.h"
 #include <stdio.h>
-#include <string.h>
 
-static void mx_points(t_path *p) {
-	char *file = "A-B,11";
-	char **apex = NULL;
-	int i = 0;
+void freearray(char **arr) {
+	int i = -1;
 
-	apex = mx_strsplit(file, '-');
-	p->a = apex[i];
-	apex = mx_strsplit(apex[1], ',');
-	p->b = apex[i];
-	free(apex);
+	if (arr == NULL)
+		return ;
+	while (arr[++i])
+	{
+		if (arr[i] != NULL)
+			free(arr[i]);
+	}
 }
 
-void mx_islands(t_path *p) {
-	char *file = "A-B,11";
-	char **split = mx_strsplit(file, ',');
-	int rast = 0;
+static void mx_points(t_path *p, char *str) {
+	char **apex;
+	char **apex2;
+	int i = 0;
+	
+	apex = mx_strsplit(str, '\n');
+	
+	while (apex[++i]) {
+		apex2 = mx_strsplit(apex[i], '-');
+		p[i - 1].a = mx_strdup(apex2[0]);
+		apex2 = mx_strsplit(apex2[1], ',');
+		p[i - 1].b = mx_strdup(apex2[0]);
+		freearray(apex2);
+		free(apex[i]);
+	}
+	free(apex);
+
+}
+
+void mx_islands(t_path *p, char *file) {
+	char *str = mx_file_to_str(file);
+	char **split = mx_strsplit(str, ',');
 	int i = 1;
-	int j = 0;
-	while (split[i][j]) {
-		rast = mx_atoi(split[i]);
-		p->distance = rast;
-		j++;
+	while (split[i]) {
+		p[i - 1].distance = mx_atoi(split[i]);
+		free(split[i]);
+		i++;
 	}
 	free(split);
-	mx_points(p);
+	mx_points(p, str);
+	free(str);
 
 }
 
-int main() {
+int main(int ac, char **av) {
 	t_path *p;
 	int count = 10;
 
 
-	p = (t_path *)malloc(sizeof(t_path)* count);
+	p = (t_path *)malloc(sizeof(t_path) * count);
 	// p[0].distance = 3;
 	// p[1].distance = 2;
-	mx_islands(p);
-	printf("distance = %d\n Apex = %s\n Apex = %s\n",  p->distance, p->a, p->b);
+	mx_islands(p, av[1]);
+	for (int k = 0; k < count; k++) {
+		printf("---Apex = %s\n---Apex = %s\ndistance = %d\n", p[k].a, p[k].b, p[k].distance);
+	}
+	system("leaks -q a.out");
+	return (0);
 }
