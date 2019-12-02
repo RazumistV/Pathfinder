@@ -14,10 +14,11 @@ typedef struct	s_list {
 	int count;
 }				t_list;
 
-struct s_island {
-	char **points;
-	int count;
-};
+typedef struct s_path{
+    int distance;
+    char *a;
+    char *b;
+}              t_path;
 
 
 int				mx_strcmp(const char *s1, const char *s2);
