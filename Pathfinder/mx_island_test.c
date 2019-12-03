@@ -49,15 +49,16 @@ void mx_islands(t_path *p, char *file) {
 
 int main(int ac, char **av) {
 	t_path *p;
-	int count = 10;
+	int count = 7;
 
 
 	p = (t_path *)malloc(sizeof(t_path) * count);
 	// p[0].distance = 3;
 	// p[1].distance = 2;
 	mx_islands(p, av[1]);
+	printf("-------------\n");
 	for (int k = 0; k < count; k++) {
-		printf("---Apex = %s\n---Apex = %s\ndistance = %d\n", p[k].a, p[k].b, p[k].distance);
+		printf("---Apex = %s\n---Apex = %s\ndistance = %d\n-------------\n", p[k].a, p[k].b, p[k].distance);
 	}
 	system("leaks -q a.out");
 	return (0);
