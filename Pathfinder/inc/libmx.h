@@ -18,6 +18,8 @@ typedef struct s_path {
     int distance;
     char *a;
     char *b;
+    int index_a;
+    int index_b;
 }              t_path;
 
 
@@ -85,5 +87,6 @@ void 			mx_printerr(char c);
 int 			mx_atoi(const char *str);
 bool 			mx_isdigit(char c);
 void 			freearray(char **arr);
+int 			mx_min_elem(int a, int b);
 
 #endif
