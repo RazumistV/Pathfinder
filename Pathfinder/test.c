@@ -1,5 +1,4 @@
 #include "inc/libmx.h"
-#include <stdio.h>
 
 int mx_islands_index(t_path *p, int current, int max_index) {
 	int j = 0;
@@ -56,6 +55,33 @@ int mx_islands(t_path *p, char *file) {
 	return --i;
 }
 
+int **matrix(const char *file, t_path *p) {
+    int **range;
+    char *str = mx_file_to_str(file);
+    int PointIslands = mx_atoi(str);
+    int k = 0;
+    int b = 0;
+	
+	free(str);
+    range = (int **)malloc(sizeof(int *) * PointIslands + 1);
+    for (int i = 0; i < PointIslands ; i++) {
+        range[i] = (int *)malloc(sizeof(int *) * PointIslands);
+        for (int j = 0; j < PointIslands; j++) {
+			if (i == p[k].index_a && j == p[k].index_b) {
+				range[i][j] = p[k].distance;
+				k++;
+			}
+			else if (i == p[b].index_b && j == p[b].index_a) {
+				range[i][j] = p[b].distance;
+				b++;
+			}
+			else
+				range[i][j] = -1;
+        }
+    }
+    return range;
+}
+
 static char **mx_perenos(char *file) {
 	char *str = mx_file_to_str(file);
 	char **split = mx_strsplit(str, '\n');
@@ -64,19 +90,28 @@ static char **mx_perenos(char *file) {
 	return split;
 }
 
+
 int main(int ac, char **av) {
-	t_path *p;
-	char **a = mx_perenos(av[1]);
+    t_path *p;
+    char **a = mx_perenos(av[1]);
 	int count = mx_arrlen(a);
 
 	p = (t_path *)malloc(sizeof(t_path) * count - 1);
 	mx_islands(p, av[1]);
-	printf("----------------\n");
-	for (int k = 0; k < count - 1; k++) {
-		printf("---Apex = %s\n---Apex = %s\n-distance = %d\n index a = %d\n index b = %d\n----------------\n", 
-			p[k].a, p[k].b, p[k].distance, p[k].index_a, p[k].index_b);
-	}
+    char *fl = mx_file_to_str(av[1]);
+    int counter = mx_atoi(fl);
+    int **res = matrix(av[1], p);
 	
-	system("leaks -q a.out");
-	return 0;
+    for (int i = 0; i < counter; i++) {
+        for (int j = 0; j < counter; j++)
+            printf("  %d", res[i][j]);
+        printf("\n");
+    }
+   system("leaks -q a.out");
+	// printf("----------------\n");
+	// for (int k = 0; k < count; k++) {
+	// 	printf("---Apex = %s\n---Apex = %s\n-distance = %d\n index a = %d\n index b = %d\n----------------\n", 
+	// 		p[k].a, p[k].b, p[k].distance, p[k].index_a, p[k].index_b);
+	// }
+	
 }

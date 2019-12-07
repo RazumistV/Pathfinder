@@ -66,8 +66,8 @@ SRC =	is_whitespace.c \
 		mx_printerr.c \
 		mx_atoi.c \
 		mx_isdigit.c \
-		freearray.c \
-		mx_min_elem.c
+		mx_min_elem.c \
+		mx_arrlen.c
 
 
 OBJ_DIR = ./obj/

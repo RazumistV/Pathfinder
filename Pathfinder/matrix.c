@@ -1,8 +1,8 @@
 #include "inc/libmx.h"
-#include "stdio.h"
+#include <stdio.h>
 
 
-int **matrix(const char *file, t_path) {
+int **matrix(const char *file, t_path *p) {
     int **range;
     char *str = mx_file_to_str(file);
     int PointIslands = mx_atoi(str);
@@ -32,30 +32,35 @@ int mx_min_elem_inarr(int *arr, int size) {
     return i;
 }
 
-char *mx_dejksta(int **matrix, int size_m, t_path *p, int size_p) {
-    int k = 0;
-    int min = 0;
 
-    for (int i = 0; i < size_m; i++) {
-        matrix[i][0] = min;
-        for (int j = 1; j < size_m;) {
-            for (; k < size_p; k++) {
-                if (p[k].index_a == matrix[i][0]);
-                    break ; 
-            }
-            if (p[k].index_b == j)
-                matrix[i][j] = p[k].distance;
-            j++;
-        }
-        min = mx_min_elem_inarr(matrix[i], size_m);
-    }
-}
+
+// void *mx_dejksta(int **matrix, int size_m, t_path *p, int size_p) {
+//     int min = 0;
+//     int k = 0;
+
+//     for (int i = 0; i < size_m; i++) {
+//         matrix[i][0] = min;
+//         for (int j = 1; j < size_m;) {
+//             for (; k < size_p; k++) {
+//                 if (p[k].index_a == matrix[i][0])
+//                     break ; 
+//             }
+//             if (p[k].index_b == j)
+//                 matrix[i][j] = p[k].distance;
+//             j++;
+//         }
+//         min = mx_min_elem_inarr(matrix[i], size_m);
+//     }
+// }
 
 int main(int ac, char **av) {
-    int **range;
-    int **res = matrix(av[1]);
-    for (int i, j = 0; res[i]; i++) {
-        for (int j = 0; res[j]; j++)
+    t_path *p;
+    int **res = matrix(av[1], p);
+    char *fl = mx_file_to_str(av[1]);
+    int count = mx_atoi(fl);
+
+    for (int i, j = 0; i < count; i++) {
+        for (int j = 0; j < count; j++)
             printf("  %d", res[i][j]);
         printf("\n");
     }
