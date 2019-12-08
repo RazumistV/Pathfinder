@@ -63,18 +63,19 @@ int **matrix(const char *file, t_path *p) {
     int b = 0;
 	
 	free(str);
-    range = (int **)malloc(sizeof(int *) * PointIslands + 1);
+    range = (int **)malloc(sizeof(int *) * PointIslands);
     for (int i = 0; i < PointIslands ; i++) {
         range[i] = (int *)malloc(sizeof(int *) * PointIslands);
         for (int j = 0; j < PointIslands; j++) {
-			if (i == p[k].index_a && j == p[k].index_b) {
+			if (i == p[k].index_b && j == p[k].index_a) {
 				range[i][j] = p[k].distance;
 				k++;
+				printf("%d\n", range[i][j]);
 			}
-			else if (i == p[b].index_b && j == p[b].index_a) {
-				range[i][j] = p[b].distance;
-				b++;
-			}
+			// else if (i == p[b].index_b && j == p[b].index_a) {
+			// 	range[i][j] = p[b].distance;
+			// 	b++;
+			// }
 			else
 				range[i][j] = -1;
         }
@@ -92,26 +93,18 @@ static char **mx_perenos(char *file) {
 
 
 int main(int ac, char **av) {
-    t_path *p;
     char **a = mx_perenos(av[1]);
 	int count = mx_arrlen(a);
-
-	p = (t_path *)malloc(sizeof(t_path) * count - 1);
+	t_path *p = (t_path *)malloc(sizeof(t_path) * count - 1);
 	mx_islands(p, av[1]);
     char *fl = mx_file_to_str(av[1]);
-    int counter = mx_atoi(fl);
+    int counter1 = mx_atoi(fl);
     int **res = matrix(av[1], p);
 	
-    for (int i = 0; i < counter; i++) {
-        for (int j = 0; j < counter; j++)
-            printf("  %d", res[i][j]);
-        printf("\n");
+    for (int i = 0; i < counter1; i++) {
+        for (int j = 0; j < i; j++)
+            printf("    %d", res[i][j]);
+        printf("\n\n");
     }
    system("leaks -q a.out");
-	// printf("----------------\n");
-	// for (int k = 0; k < count; k++) {
-	// 	printf("---Apex = %s\n---Apex = %s\n-distance = %d\n index a = %d\n index b = %d\n----------------\n", 
-	// 		p[k].a, p[k].b, p[k].distance, p[k].index_a, p[k].index_b);
-	// }
-	
 }

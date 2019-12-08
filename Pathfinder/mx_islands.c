@@ -31,16 +31,15 @@ int mx_islands_index(t_path *p, int current, int max_index) {
 	return max_index;
 }
 
-int mx_islands(t_path *p, char *file) {
+void mx_islands(t_path *p, char *file) {
 	char *fl = mx_file_to_str(file);
 	char **WordsA = mx_strsplit(fl, '\n');
 	char **str1;
 	char **str2;
-	int i;
 	int max_index = 0;
 
 	free(fl);
-	for(i = 0; WordsA[++i];) {
+	for(int i = 0; WordsA[++i];) {
 		str1 = mx_strsplit(WordsA[i], '-');
 		str2 = mx_strsplit(str1[1], ',');
 		p[i - 1].a = mx_strdup(str1[0]);
@@ -53,7 +52,6 @@ int mx_islands(t_path *p, char *file) {
 		mx_del_strarr(&str2);
 	}
 	mx_del_strarr(&WordsA);
-	return --i;
 }
 
 static char **mx_perenos(char *file) {
@@ -67,12 +65,13 @@ static char **mx_perenos(char *file) {
 int main(int ac, char **av) {
 	t_path *p;
 	char **a = mx_perenos(av[1]);
-	int count = mx_arrlen(a);
+	int count = mx_arrlen(a) - 1;
+	printf("res = %d\n", count);
 
-	p = (t_path *)malloc(sizeof(t_path) * count - 1);
+	p = (t_path *)malloc(sizeof(t_path) * count);
 	mx_islands(p, av[1]);
 	printf("----------------\n");
-	for (int k = 0; k < count - 1; k++) {
+	for (int k = 0; k < count; k++) {
 		printf("---Apex = %s\n---Apex = %s\n-distance = %d\n index a = %d\n index b = %d\n----------------\n", 
 			p[k].a, p[k].b, p[k].distance, p[k].index_a, p[k].index_b);
 	}
