@@ -69,10 +69,12 @@ int **matrix(const char *file, t_path *p) {
         for (int j = 0; j < PointIslands; j++) {
 			if (i == p[k].index_b && j == p[k].index_a) {
 				range[i][j] = p[k].distance;
+				range[j][i] = p[k].distance;
 				k++;
 				printf("%d\n", range[i][j]);
 			}
-			// else if (i == p[b].index_b && j == p[b].index_a) {
+			// else if (i == p[b].index_a && j == p[b].index_b) {
+			// 	printf("index_b = %d, index_b = %d\n", p[b].index_a, p[b].index_a);
 			// 	range[i][j] = p[b].distance;
 			// 	b++;
 			// }
@@ -83,18 +85,26 @@ int **matrix(const char *file, t_path *p) {
     return range;
 }
 
-static char **mx_perenos(char *file) {
+static int mx_str_count(char *file) {
 	char *str = mx_file_to_str(file);
-	char **split = mx_strsplit(str, '\n');
+	int j = 0;
 
+	for (int i = 0; str[i]; i++) {
+		if (str[i] == '\n')
+			j++;
+	}
 	free(str);
-	return split;
+	return j;
 }
 
+// int **dejkstra(t_path p) {
+
+// 	int j = 0;
+// 	for (int i = 0; p[i].)
+// }
 
 int main(int ac, char **av) {
-    char **a = mx_perenos(av[1]);
-	int count = mx_arrlen(a);
+	int count = mx_str_count(av[1]) - 1;
 	t_path *p = (t_path *)malloc(sizeof(t_path) * count - 1);
 	mx_islands(p, av[1]);
     char *fl = mx_file_to_str(av[1]);
@@ -102,7 +112,7 @@ int main(int ac, char **av) {
     int **res = matrix(av[1], p);
 	
     for (int i = 0; i < counter1; i++) {
-        for (int j = 0; j < i; j++)
+        for (int j = 0; j < counter1; j++)
             printf("    %d", res[i][j]);
         printf("\n\n");
     }

@@ -1,80 +1,94 @@
 #include "inc/libmx.h"
 #include <stdio.h>
 
-int mx_islands_index(t_path *p, int current, int max_index) {
-	int j = 0;
-
-	if (current == 0) {
-		p[current].index_a = 0;
-		p[current].index_b = 1;
-		max_index = 1;
-	}
-	while (j < current) {
-		if(mx_strcmp(p[current].a, p[j].a) == 0)
-			p[current].index_a = p[j].index_a;
-		else if(mx_strcmp(p[current].a, p[j].b) == 0)
-			p[current].index_a = p[j].index_b;
-		else if (p[current].index_a == -1 && j == current - 1) {
-			p[current].index_a = max_index + 1;
-			max_index++;
-		}
-		if (mx_strcmp(p[current].b, p[j].a) == 0)
-			p[current].index_b = p[j].index_a;
-		else if (mx_strcmp(p[current].b, p[j].b) == 0)
-			p[current].index_b = p[j].index_b;
-		else if (p[current].index_b == -1 && j == current - 1) {
-			p[current].index_b = max_index + 1;
-			max_index++;
-		}
-		j++;
-	}
-	return max_index;
+static void double_del_arr(char **str1, char **str2) {
+	mx_del_strarr(&str1);
+	mx_del_strarr(&str2);
 }
 
-void mx_islands(t_path *p, char *file) {
-	char *fl = mx_file_to_str(file);
+static bool new_island(char *str, t_path *p, int count) {
+	for (int i = 0; i < count; i++) {
+		if (mx_strcmp(str, p[i].name) == 0)
+			return false;
+	}
+	return true;
+}
+
+
+void mx_islands(t_path *p, char *fl, int count) {
 	char **WordsA = mx_strsplit(fl, '\n');
 	char **str1;
 	char **str2;
-	int max_index = 0;
+	int j = 0;
 
-	free(fl);
-	for(int i = 0; WordsA[++i];) {
+	for(int i = 1; WordsA[i]; i++) {
 		str1 = mx_strsplit(WordsA[i], '-');
 		str2 = mx_strsplit(str1[1], ',');
-		p[i - 1].a = mx_strdup(str1[0]);
-		p[i - 1].b = mx_strdup(str2[0]);
-		p[i - 1].distance = mx_atoi(str2[1]);
-		p[i - 1].index_a = -1;
-		p[i - 1].index_b = -1;
-		max_index = mx_islands_index(p, i - 1, max_index);
-		mx_del_strarr(&str1);
-		mx_del_strarr(&str2);
+		if (new_island(str1[0], p, j)) {
+			p[j].index_name = j;
+			p[j++].name = mx_strdup(str1[0]);
+		}
+		if (new_island(str2[0], p, j)) {
+			p[j].index_name = j;
+			p[j++].name = mx_strdup(str2[0]);
+		}
+		double_del_arr(str1, str2);
 	}
 	mx_del_strarr(&WordsA);
 }
 
-static char **mx_perenos(char *file) {
-	char *str = mx_file_to_str(file);
-	char **split = mx_strsplit(str, '\n');
+static void routes_count(t_path *p, char *fl, int count) {
+	char **WordsA = mx_strsplit(fl, '\n');
+	char **str1;
+	char **str2;
 
-	free(str);
-	return split;
+	for(int i = 1; WordsA[i]; i++) {
+		str1 = mx_strsplit(WordsA[i], '-');
+		str2 = mx_strsplit(str1[1], ',');
+		for(int j = 0; j < 7; j++) {
+			p[i].d[j].distance = mx_atoi(str2[1]);
+		}
+	}
+}
+
+// static int mx_str_count(char *file) {
+// 	char *str = mx_file_to_str(file);
+// 	int j = 0;
+
+// 	for (int i = 0; str[i]; i++) {
+// 		if (str[i] == '\n')
+// 			j++;
+// 	}
+// 	free(str);
+// 	return j;
+// }
+
+
+void print_island_struct(t_path *p, int count) {
+	for (int i = 0; i < count; i++) {
+		printf("\n");
+		printf("$******PRINT NEW ISLAND********$\n");
+		printf("Name = %s\nIndex = %d\n", p[i].name, p[i].index_name);
+		// for (int j = 0; j < 10; j++) {
+		// 	printf("distance = %d\n", p[i].d[j].distance);
+		// }
+		//****************************************
+		// for (int j = 0; j < p[i].routes_count; j++) {
+		// 	printf("point name = %s, index point = %d, distance = %d\n", p[i].d[j].point, p[i].d[j].index_point, p[i].d[j].dist);
+		// }
+		printf("$*********END ISLAND***********$\n\n");
+	}
 }
 
 int main(int ac, char **av) {
 	t_path *p;
-	char **a = mx_perenos(av[1]);
-	int count = mx_arrlen(a) - 1;
-	printf("res = %d\n", count);
-
+	char *fl = mx_file_to_str(av[1]);
+	int count = mx_atoi(fl);
 	p = (t_path *)malloc(sizeof(t_path) * count);
-	mx_islands(p, av[1]);
-	printf("----------------\n");
-	for (int k = 0; k < count; k++) {
-		printf("---Apex = %s\n---Apex = %s\n-distance = %d\n index a = %d\n index b = %d\n----------------\n", 
-			p[k].a, p[k].b, p[k].distance, p[k].index_a, p[k].index_b);
-	}
+	printf("struct count \\n = %d\n", count);
+	mx_islands(p, fl, count);
+	print_island_struct(p, count);
+	free(fl);
 	
 	system("leaks -q a.out");
 	return 0;

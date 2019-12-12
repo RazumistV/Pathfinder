@@ -11,30 +11,34 @@
 typedef struct	s_list {
 	void			*data;
 	struct s_list	*next;
-	int count;
-}			   t_list;
+}				t_list;
 
-typedef struct s_path {
-    int distance;
-    char *a;
-    char *b;
-    int index_a;
-    int index_b;
-}              t_path;
+typedef struct s_dist {
+	char *point;
+	int index_point;
+	struct s_path *d;
+}				t_dist;
 
+typedef struct 	s_path {
+    char *name;
+    int index_name;
+    int count_distance;
+	int distance;
+    struct s_path *d;
+}				t_path;
 
 int				mx_strcmp(const char *s1, const char *s2);
 int				mx_binary_search(char **arr, int size, const char *s, int *count);
 int				mx_bubble_sort(char **arr, int size);
 void			mx_foreach(int *arr, int size, void (*f)(int));
-unsigned long 	mx_hex_to_nbr(const char *hex);
-double 			mx_pow(double n, unsigned int pow);
-void 			mx_printchar(char c);
-int 			mx_strlen(const char *c);
-void 			mx_printstr(const char *s);
-void 			mx_printint(int n);
-int 			mx_sqrt(int x);
-char 			*mx_strcpy(char *dst, const char *src);
+unsigned long	mx_hex_to_nbr(const char *hex);
+double			mx_pow(double n, unsigned int pow);
+void			mx_printchar(char c);
+int				mx_strlen(const char *c);
+void			mx_printstr(const char *s);
+void			mx_printint(int n);
+int				mx_sqrt(int x);
+char			*mx_strcpy(char *dst, const char *src);
 char 			*mx_strnew(const int size);
 char 			*mx_strdup(const char *str);
 int				mx_strncmp(const char *s1, const char *s2, int n);
