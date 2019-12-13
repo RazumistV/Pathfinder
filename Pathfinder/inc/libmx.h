@@ -16,15 +16,14 @@ typedef struct	s_list {
 typedef struct s_dist {
 	char *point;
 	int index_point;
-	struct s_path *d;
+	int dist;
 }				t_dist;
 
 typedef struct 	s_path {
     char *name;
     int index_name;
     int count_distance;
-	int distance;
-    struct s_path *d;
+	struct s_dist *d;
 }				t_path;
 
 int				mx_strcmp(const char *s1, const char *s2);
@@ -92,5 +91,6 @@ int 			mx_atoi(const char *str);
 bool 			mx_isdigit(char c);
 int 			mx_min_elem(int a, int b);
 int 			mx_arrlen(char **arr);
+void			double_del_arr(char **str1, char **str2);
 
 #endif

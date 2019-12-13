@@ -67,7 +67,8 @@ SRC =	is_whitespace.c \
 		mx_atoi.c \
 		mx_isdigit.c \
 		mx_min_elem.c \
-		mx_arrlen.c
+		mx_arrlen.c \
+		double_del_arr.c
 
 
 OBJ_DIR = ./obj/
