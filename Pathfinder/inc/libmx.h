@@ -1,6 +1,18 @@
 #ifndef LIBMX_H
 #define LIBMX_H
 
+//ERROR CASES 
+
+#define ERROR_USAGE "usage: ./pathfinder [filename]\n"
+#define FILE_EXIST "error: file "
+#define FILE_EXIST2 " does not exist\n"
+#define EMPTY_FILE "error: file "
+#define EMPTY_FILE2 " is empty\n"
+#define LINE_ERROR "error: line 1 is not valid\n"
+#define LINE_VALUE "error: line "
+#define LINE_VALUE2 " is not valid\n"
+#define INVALID_ISLANDS "error: invalid number of islands\n"
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -86,7 +98,7 @@ bool 			str_is_null(char *s);
 void			swap_strings(char **str1, char **str2, unsigned int *c);
 int				count_letters(const char *s, char c);
 char 			*mx_file_to_str(const char *file);
-void 			mx_printerr(char c);
+void 			mx_printerr(const char *s);
 int 			mx_atoi(const char *str);
 bool 			mx_isdigit(char c);
 int 			mx_min_elem(int a, int b);
