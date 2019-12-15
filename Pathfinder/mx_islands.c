@@ -66,7 +66,8 @@ static void print_island_struct(t_path *p, int count) {
 	for (int i = 0; i < count; i++) {
 		printf("\n");
 		printf("$******PRINT NEW ISLAND********$\n");
-		printf("Name = %s ||| Index = %d ||| Count_distance = %d\n", p[i].name, p[i].index_name, p[i].count_distance);
+		printf("Name = %s ||| Index = %d ||| Count_distance = %d\n", 
+			p[i].name, p[i].index_name, p[i].count_distance);
 		for (int j = 0; j < p[i].count_distance; j++) {
 			printf("point name = %s ||| index point = %d ||| distance = %d\n", 
 				p[i].d[j].point, p[i].d[j].index_point, p[i].d[j].dist);

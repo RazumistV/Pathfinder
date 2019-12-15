@@ -12,6 +12,31 @@
 #define LINE_VALUE "error: line "
 #define LINE_VALUE2 " is not valid\n"
 #define INVALID_ISLANDS "error: invalid number of islands\n"
+#define RAVNO "========================================\n"
+
+//ROFL
+
+#define СЛАВА_УКРАЇНІ(x) main(x)
+#define ГЕРОЯМ_СЛАВА(x) return(x)
+
+#define гривня int
+#define буква char
+#define гривня_з_копійками double
+#define ніхріна void
+#define дофіга(x) x*
+
+#define от_стільки =
+#define так_само ==
+#define більше >
+#define менше <
+#define нарощувати(x) x++
+
+#define перемога if
+#define зрада else
+#define ганяти_по_колу_доки while
+
+#define червонець 10
+#define вякати printf
 
 #include <unistd.h>
 #include <stdlib.h>
