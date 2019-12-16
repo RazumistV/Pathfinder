@@ -42,35 +42,36 @@ static void connect_count(t_path *p, char *fl, char **WordsA, int count) {
 	}
 }
 
-// static void mx_islands(char **WordsA, int count) {
-// 	char **str1;
-// 	char **str2;
-// 	int j = 0;
-// 	t_path *p;
+//***********************ПРОВЕРКА_КОЛ-ВО_ВЕРШИН*****************************************
 
-// 	for(int i = 1; WordsA[i]; i++) {
-// 		str1 = mx_strsplit(WordsA[i], '-');
-// 		str2 = mx_strsplit(str1[1], ',');
-// 		printf("-------------------------\n");
-// 		if (new_island(str1[0], p, j)) {
-// 			p = realloc(p, sizeof(p) * (j + 2));
-// 			p[j].index_name = j;
-// 			p[j++].name = mx_strdup(str1[0]);
-// 		}
-// 		if (new_island(str2[0], p, j)) {
-// 			p = realloc(p, sizeof(p) * (j + 2));
-// 			p[j].index_name = j;
-// 			p[j++].name = mx_strdup(str2[0]);
-// 		}
-// 		double_del_arr(str1, str2);
-// 	}
-// 	// free(p);
-// 	if (j != count)
-// 	{
-// 		printf("PREKL");
-// 		exit(0);
-// 	}
-// }
+static void mx_islands_check(char **WordsA, int count) {
+	char **str1;
+	char **str2;
+	int j = 0;
+	t_path *p = NULL;
+
+	for(int i = 1; WordsA[i]; i++) {
+		str1 = mx_strsplit(WordsA[i], '-');
+		str2 = mx_strsplit(str1[1], ',');
+		if (new_island(str1[0], p, j)) {
+			p = mx_realloc(p, sizeof(*p) * (j + 1));
+			p[j].index_name = j;
+			p[j++].name = mx_strdup(str1[0]);
+		}
+		if (new_island(str2[0], p, j)) {
+			p = mx_realloc(p, sizeof(*p) * (j + 1));
+			p[j].index_name = j;
+			p[j++].name = mx_strdup(str2[0]);
+		}
+		double_del_arr(str1, str2);
+	}
+	if (j != count) {
+		mx_printerr("line 1 not valid");
+		exit(0);
+	}
+}
+
+//***************************************************************************************
 
 static void mx_islands(t_path *p, char *fl, char **WordsA, int count) {
 	char **str1;
@@ -106,19 +107,20 @@ static void print_island_struct(t_path *p, int count) {
 	}
 }
 
+
 int main(int ac, char **av) {
 	t_path *p;
 	char *fl = mx_file_to_str(av[1]);
 	char **WordsA = mx_strsplit(fl, '\n');
 	int count = mx_atoi(fl);
 	p = (t_path *)malloc(sizeof(t_path) * count);
+	mx_islands_check(WordsA, count);
+	system("leaks -q a.out");
 	mx_islands(p, fl, WordsA, count);
-	// mx_islands(WordsA, count);
 	connect_count(p, fl, WordsA, count);
 	print_island_struct(p, count);
 	free(fl);
 	mx_del_strarr(&WordsA);
 	
-	system("leaks -q a.out");
 	return 0;
 }
