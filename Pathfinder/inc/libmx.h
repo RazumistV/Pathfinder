@@ -3,15 +3,16 @@
 
 //ERROR CASES 
 
-#define ERROR_USAGE "usage: ./pathfinder [filename]"
+#define ERROR_USAGE "usage: ./pathfinder [filename]\n"
 #define FILE_EXIST "error: file "
-#define FILE_EXIST2 " does not exist"
+#define FILE_EXIST2 " does not exist\n"
 #define EMPTY_FILE "error: file "
-#define EMPTY_FILE2 " is empty"
-#define LINE_ERROR "error: line 1 is not valid"
+#define EMPTY_FILE2 " is empty\n"
+#define LINE_ERROR "error: line " 
+#define LINE_ERROR2 " is not valid\n"
 #define LINE_VALUE "error: line "
-#define LINE_VALUE2 " is not valid"
-#define INVALID_ISLANDS "error: invalid number of islands"
+#define LINE_VALUE2 " is not valid\n"
+#define INVALID_ISLANDS "error: invalid number of islands\n"
 #define RAVNO "========================================\n"
 
 #include <unistd.h>
@@ -38,6 +39,12 @@ typedef struct 	s_path {
     int count_distance;
 	struct s_dist *d;
 }				t_path;
+
+typedef struct 	s_valid {
+    char *name;
+    int index_name;
+	struct s_valid *next;
+}				t_valid;
 
 int				mx_strcmp(const char *s1, const char *s2);
 int				mx_binary_search(char **arr, int size, const char *s, int *count);

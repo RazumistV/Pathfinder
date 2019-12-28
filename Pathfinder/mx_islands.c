@@ -44,29 +44,62 @@ static void connect_count(t_path *p, char *fl, char **WordsA, int count) {
 
 //***********************ПРОВЕРКА_КОЛ-ВО_ВЕРШИН*****************************************
 
+t_valid *mx_create_node1(void *data, int j) {
+    t_valid *node = malloc(sizeof(t_valid));
+
+    if (!node)
+        return NULL;
+    node->name = data;
+    node->index_name = j;
+    node->next = NULL;
+    return node;
+}
+
+void mx_push_back1(t_valid **list, void *data, int i) {
+    t_valid *pl = *list;
+ 	t_valid *node = mx_create_node1(data, i);
+
+    if (pl == NULL) {
+    	*list = node;
+        return ;
+    }
+    while (pl->next != NULL) {
+        pl = pl->next;
+    }
+    pl->next = node;
+}
+
+
 static void mx_islands_check(char **WordsA, int count) {
 	char **str1;
 	char **str2;
+	t_valid *p;
 	int j = 0;
-	t_path *p = NULL;
+	char *name;
 
 	for(int i = 1; WordsA[i]; i++) {
 		str1 = mx_strsplit(WordsA[i], '-');
 		str2 = mx_strsplit(str1[1], ',');
 		if (new_island(str1[0], p, j)) {
-			p = mx_realloc(p, sizeof(*p) * (j + 1));
-			p[j].index_name = j;
-			p[j++].name = mx_strdup(str1[0]);
+			name = mx_strdup(str1[0]);
+			j++;
+			if (j == 0)
+				p = mx_create_node1(name, j);
+			else
+				mx_push_back1(&p, name, j);
 		}
 		if (new_island(str2[0], p, j)) {
-			p = mx_realloc(p, sizeof(*p) * (j + 1));
-			p[j].index_name = j;
-			p[j++].name = mx_strdup(str2[0]);
+			name = mx_strdup(str1[0]);
+			j++;
+			mx_push_back1(&p, name, j);
 		}
+		free(name);
+		p = p->next;
 		double_del_arr(str1, str2);
 	}
 	if (j != count) {
-		mx_printerr("line 1 not valid");
+		mx_printerr("error: invalid number of islands\n");
+		system("leaks -q a.out");
 		exit(0);
 	}
 }
@@ -115,12 +148,12 @@ int main(int ac, char **av) {
 	int count = mx_atoi(fl);
 	p = (t_path *)malloc(sizeof(t_path) * count);
 	mx_islands_check(WordsA, count);
-	system("leaks -q a.out");
 	mx_islands(p, fl, WordsA, count);
 	connect_count(p, fl, WordsA, count);
 	print_island_struct(p, count);
 	free(fl);
 	mx_del_strarr(&WordsA);
 	
+	system("leaks -q a.out");
 	return 0;
 }
