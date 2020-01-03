@@ -104,7 +104,7 @@ char *argument(int ac, char *file) {
 
 /***************************************************************************************************/
 
-char *is_not_exist(char *file) {
+void is_not_exist(char *file) {
 	int fd = open(file, O_RDONLY);
 
 	if (fd < 0) {
@@ -115,8 +115,6 @@ char *is_not_exist(char *file) {
 	    mx_printerr(FILE_EXIST2);
 	    exit (0);
 	}
-	else
-		return file;
 }
 
 /***************************************************************************************************/
@@ -140,7 +138,7 @@ char *is_not_exist(char *file) {
 /***************************************************************************************************/
 
 
-char *valid_island(char *file, char **WordsA) {
+void *valid_island(char **WordsA) {
 	for(int i = 1; WordsA[i]; i++) {
 			char **str = mx_strsplit(WordsA[i], '-');
 
@@ -164,22 +162,20 @@ char *valid_island(char *file, char **WordsA) {
 		}
 		double_del_arr(str, str2);
 	}
-	return file;
 }
 
 /***************************************************************************************************/
 
-char *apex_count(char *file, char **WordsA) {
+void apex_count(char **WordsA) {
 	if (!str_is_digit(WordsA[0])) {
 		mx_printerr(INVALID_ISLANDS);
 		exit (0);
 	}
-	return file;
 }
 
 /***************************************************************************************************/
 
-char *print_error(int ac, char *av, char **WordsA, char *file) {
+void print_error(int ac, char *av, char **WordsA) {
 		argument(ac, av);
 		is_not_exist(av);
 		is_folder(av);
@@ -188,9 +184,6 @@ char *print_error(int ac, char *av, char **WordsA, char *file) {
 		validator_znakov(av, WordsA);
 		range_validator(av, WordsA);
 		valid_island(file, WordsA);
-		mx_del_strarr(&WordsA);
-		printf("%s\n", file);
-	return file;
 }
 
 /***************************************************************************************************/

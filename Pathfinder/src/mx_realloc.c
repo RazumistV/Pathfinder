@@ -3,7 +3,7 @@
 void *mx_realloc(void *ptr, size_t size) {
 	size_t len;
 	void *new;
-	
+
 	if (size <= 0 && ptr) {
 		free(ptr);
 		return NULL;

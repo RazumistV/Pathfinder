@@ -6,7 +6,7 @@ char *mx_replace_substr(const char *str, const char *sub, const char *replace) {
 	int sab = mx_count_substr(str, sub);
 	char *new;
 	int len = mx_strlen(str);
-	
+
 	if (str == NULL || sub == NULL || replace == NULL)
 		return NULL;
 	new = mx_strnew(len - sab * (mx_strlen(sub)) + sab * mx_strlen(replace));

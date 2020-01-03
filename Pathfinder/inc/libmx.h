@@ -22,6 +22,8 @@
 #include <fcntl.h>
 #include <wchar.h>
 
+//************************************************************************
+
 typedef struct	s_list {
 	void			*data;
 	struct s_list	*next;
@@ -40,11 +42,14 @@ typedef struct 	s_path {
 	struct s_dist *d;
 }				t_path;
 
-typedef struct 	s_valid {
-    char *name;
-    int index_name;
-	struct s_valid *next;
-}				t_valid;
+typedef struct s_lst_res {
+	int *road;
+	int *road_dist;
+	int sum_dist;
+	int len;
+	struct s_lst_res *next;
+
+} t_lst_res;
 
 int				mx_strcmp(const char *s1, const char *s2);
 int				mx_binary_search(char **arr, int size, const char *s, int *count);
