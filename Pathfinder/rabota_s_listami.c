@@ -119,6 +119,8 @@ void mx_pop_back_res(t_lst_res **lst) {
 }
 
 
+
+
 void mx_pop_elem_of_lst(t_lst_res *lst) {
 	t_lst_res *tmp = lst;
 	int i = 0;
@@ -147,24 +149,24 @@ void mx_pop_elem_of_lst(t_lst_res *lst) {
 	}
 }
 
-t_lst_res *first_itter(t_path *p/* , int count*/) {
-	t_lst_res *l;
-	int road[2];
-	int road_dist[1];
-	int sum_dist;
+// t_lst_res *first_itter(t_path *p/* , int count*/) {
+// 	t_lst_res *l;
+// 	int road[2];
+// 	int road_dist[1];
+// 	int sum_dist;
 
-	for (int k = 0; k < count_distance; k++) {
-		road[0] = p[0].index_name;
-		road[1] = p[0].d[k].index_point;
-		road_dist[0] = p[0].d[k].dist;
-		sum_dist = p[0].d[k].dist;
-		if (k == 0)
-			l = mx_create_list_res(*road, *road_dist, sum_dist, 2);
-		else
-			mx_push_back_res(&p[0], *road, *road_dist, sum_dist, 2);
-	//road_dist = p[0].d.dist
-	}
-}
+// 	for (int k = 0; k < count_distance; k++) {
+// 		road[0] = p[0].index_name;
+// 		road[1] = p[0].d[k].index_point;
+// 		road_dist[0] = p[0].d[k].dist;
+// 		sum_dist = p[0].d[k].dist;
+// 		if (k == 0)
+// 			l = mx_create_list_res(*road, *road_dist, sum_dist, 2);
+// 		else
+// 			mx_push_back_res(&p[0], *road, *road_dist, sum_dist, 2);
+// 	//road_dist = p[0].d.dist
+// 	}
+// }
 
 
 void mx_print_res(t_lst_res *res) {
@@ -187,30 +189,44 @@ void mx_print_res(t_lst_res *res) {
 	printf("*************************************\n");
 	}
 }
+int list_size_res(t_lst_res *list) {
+	int c = 0;
+	t_lst_res *temp = list;
 
-// int main() {
-// 	int *road = (int *)malloc(sizeof(int) * 3);
-// 	int *road_dist = (int *)malloc(sizeof(int) * 3);
-// 	int k = 1;
-// 	for (int i = 0; i < 3; i++) {
-// 		road[i] = k;
-// 		k++;
-// 	}
-// 	//printf("============\n");
-// 	for (int j = 0; j < 2; j++){
-// 		road_dist[j] = k;
-// 		k++;
-// 	}
-// 	t_lst_res *res = mx_create_list_res(road, road_dist, 4, 3);
-// 	mx_push_back_res(&res, road, road_dist, 4, 3);
-// 	mx_push_back_res(&res, road, road_dist, 5, 3);
-// 	//mx_pop_front_res(&res);
-// 	//mx_sort_list_res(res);
-// 	mx_pop_elem_of_lst(res);
-// 	mx_print_res(res);
+	if (!list) 
+		return 0;
+
+	while (temp) {
+		c++;
+		temp = temp->next;
+	}
+    return c;
+}
+
+int main() {
+	int *road = (int *)malloc(sizeof(int) * 3);
+	int *road_dist = (int *)malloc(sizeof(int) * 3);
+	int k = 1;
+	for (int i = 0; i < 3; i++) {
+		road[i] = k;
+		k++;
+	}
+	//printf("============\n");
+	for (int j = 0; j < 2; j++){
+		road_dist[j] = k;
+		k++;
+	}
+	t_lst_res *res = mx_create_list_res(road, road_dist, 4, 3);
+	mx_push_back_res(&res, road, road_dist, 4, 3);
+	mx_push_back_res(&res, road, road_dist, 5, 3);
+	//mx_pop_front_res(&res);
+	//mx_sort_list_res(res);
+	//mx_pop_elem_of_lst(res);
+	printf("LIST SIZE = %d\n", list_size_res(res));
+	mx_print_res(res);
 
 
-// }
+}
 
 
 
