@@ -144,7 +144,6 @@ void mx_pop_elem_of_lst(t_lst_res *lst) {
 	t_lst_res *current;
 	t_lst_res *next;
 	while (find_itter(lst) != -1) {
-		printf("%d\n", find_itter(lst));
 		//printf("_____________________________________________________\n\n");
 		if (find_itter(lst) == 0) {
 		//	printf("###################################################################\n\n");
@@ -205,7 +204,6 @@ t_lst_res *first_itter(t_path *p , int count ) {
 		road_dist[0] = p[count].d[k].dist;
 		sum_dist = p[count].d[k].dist;
 		if (k == 0) {
-			printf("BLYA\n");
 			l = mx_create_list_res(road, road_dist, sum_dist, 2);
 		}
 		else
@@ -220,25 +218,23 @@ t_lst_res *first_itter(t_path *p , int count ) {
 
 
 
-t_lst_res *mx_al(t_path *p, t_lst_res *l, int count) {
+t_lst_res *mx_al(t_path *p, t_lst_res *l, int count, int z) {
 	int *road;
 	int *road_dist;
 	int sum_dist;
-	int len;
 	bool active[count];
 	int i;
-	t_lst_res *res;
+	t_lst_res *res = NULL;
 	int n = 0;
 
 	for (int j = 0; j < count; j++) {
 		active[j] = true;
 	}
-	active[0] = false;
+	active[z] = false;
 
 	while (l) {
 		mx_sort_list_res(l);
 		i = l->road[l->len - 1];
-
 		for (int k = 0; k < p[i].count_distance; k++) {
 			//printf("count_distance = %d\n", p[i].count_distance);
 			if (active[p[i].d[k].index_point]) {
@@ -279,17 +275,23 @@ t_lst_res *mx_al(t_path *p, t_lst_res *l, int count) {
 				free(road_dist);
 			}
 		}
-		if (l->len == 2 && n == 0) {
+		if (l->len == 2 && n == 0  && l->road[l->len - 1] > l->road[0]) {
 			res = mx_create_list_res(l->road, l->road_dist, l->sum_dist, l->len);
 			n++;
 		}
-		else
+		else if (l->road[l->len - 1] > l->road[0])
 			mx_push_back_res(&res, l->road, l->road_dist, l->sum_dist, l->len);
-	
+		//mx_print_res(l);
 		mx_pop_elem_of_lst(l);
 		mx_pop_front_res(&l);
+		//mx_print_res(l);
 		active[i] = false;
-		mx_print_res(res);
+		//printf("error\n");
+		//mx_print_res(res);
+
+	}
+	if (res == NULL) {
+		mx_memset(res, 0, sizeof(t_lst_res));
 	}
 	return res;
 }
@@ -451,10 +453,10 @@ int main(int ac, char **av) {
 	t_lst_res **res = (t_lst_res **)malloc(sizeof(t_lst_res *) * count);
 	for (int i = 0; i < count; i++) {
 		l[i] = first_itter(p, i);
-		//mx_print_res(l);
-		res[i] = mx_al(p, l[i], i);
+		res[i] = mx_al(p, l[i], count, i);
+		mx_print_res(res[i]);
 	}
-	print_island_struct(p, count);
+	//print_island_struct(p, count);
 	free(fl);
 	mx_del_strarr(&WordsA);
 	

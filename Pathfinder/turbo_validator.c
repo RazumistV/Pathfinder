@@ -160,7 +160,7 @@ void *valid_island(char **WordsA) {
 			mx_del_strarr(&str2);
 			exit (0);
 		}
-		double_del_arr(str, str2);
+		//double_del_arr(str, str2);
 	}
 }
 
@@ -180,10 +180,10 @@ void print_error(int ac, char *av, char **WordsA) {
 		is_not_exist(av);
 		is_folder(av);
 		is_empty(av);
-		apex_count(av, WordsA);
+		apex_count(WordsA);
 		validator_znakov(av, WordsA);
 		range_validator(av, WordsA);
-		valid_island(file, WordsA);
+		valid_island(WordsA);
 }
 
 /***************************************************************************************************/
@@ -192,7 +192,7 @@ int main(int ac, char **av) {
 	char *file = mx_file_to_str(av[1]);
 	char **WordsA = mx_strsplit(file, '\n');
 
-	print_error(ac, av[1], WordsA, file);
+	print_error(ac, av[1], WordsA);
 	free(file);
 
 	system("leaks -q a.out");

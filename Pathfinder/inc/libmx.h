@@ -48,7 +48,6 @@ typedef struct s_lst_res {
 	int sum_dist;
 	int len;
 	struct s_lst_res *next;
-
 } t_lst_res;
 
 int				mx_strcmp(const char *s1, const char *s2);
