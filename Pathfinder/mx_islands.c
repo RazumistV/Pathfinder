@@ -1,5 +1,5 @@
 #include "inc/libmx.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 
 t_lst_res *mx_create_list_res(int *road, int *road_dist, int sum_dist, int len) {
@@ -33,6 +33,7 @@ void mx_push_back_res(t_lst_res **lst, int *road, int *road_dist, int sum_dist, 
 void mx_pop_front_res(t_lst_res **lst) {
 	if (lst == NULL || *lst == NULL)
 		return ;
+	// if ()
 	t_lst_res *tmp = (*lst)->next;
 	free((*lst)->road);
 	free((*lst)->road_dist);
@@ -138,35 +139,54 @@ void del_el_list(t_lst_res *tmp) {
 	free(tmp);
 }
 
+void mx_pop_elem_of_list(t_lst_res *lst) {
+ if (lst) {
+  t_lst_res *tmp = lst;
+  t_lst_res *prv;
+
+  while (find_itter(lst) != -1) {
+   tmp = lst;
+   if (find_itter(lst) == 0)
+    mx_pop_front_res(&lst);
+   else if (find_itter(lst) == list_size_res(lst) - 1)
+    mx_pop_back_res(&lst);
+   else {
+    for (int i = 0; i < find_itter(lst); i++) {
+     prv = tmp; 
+            tmp = tmp->next; 
+    }
+    prv->next = tmp->next; 
+    del_el_list(tmp);
+   }
+  }
+ }
+}
+
 void mx_pop_elem_of_lst(t_lst_res *lst) {
+	if (lst) {
 	t_lst_res *tmp = lst;
-	int i = 0;
 	t_lst_res *current;
 	t_lst_res *next;
 	while (find_itter(lst) != -1) {
+		tmp = lst;
 		//printf("_____________________________________________________\n\n");
 		if (find_itter(lst) == 0) {
 		//	printf("###################################################################\n\n");
 			mx_pop_front_res(&lst);
 		}
-		else if (find_itter(lst) == list_size_res(tmp) - 1)
+		else if (find_itter(lst) == list_size_res(lst) - 1)
 			mx_pop_back_res(&lst);
 		else {
-			while (i < find_itter(lst)) {
+			for (int i = 0; i < find_itter(lst); i++) {
 				current = tmp;
 				tmp = tmp->next;
-				i++;
 			}
-			// free(tmp->next->road);
-			// free(tmp->next->road_dist);
-			// free(tmp->next);
 			current->next = tmp->next;
 			del_el_list(tmp);
 		}
 	}
 }
-
-
+}
 
 
 void mx_print_res(t_lst_res *res) {
@@ -275,20 +295,24 @@ t_lst_res *mx_al(t_path *p, t_lst_res *l, int count, int z) {
 				free(road_dist);
 			}
 		}
-		if (l->len == 2 && n == 0  && l->road[l->len - 1] > l->road[0]) {
+		if (n == 0 && l->road[l->len - 1] > l->road[0]) {
 			res = mx_create_list_res(l->road, l->road_dist, l->sum_dist, l->len);
 			n++;
 		}
 		else if (l->road[l->len - 1] > l->road[0])
 			mx_push_back_res(&res, l->road, l->road_dist, l->sum_dist, l->len);
 		//mx_print_res(l);
-		mx_pop_elem_of_lst(l);
+		//printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+		mx_pop_elem_of_list(l);
 		mx_pop_front_res(&l);
 		//mx_print_res(l);
+		//printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 		active[i] = false;
-		//printf("error\n");
-		//mx_print_res(res);
+		// printf("%s\n", "PREKL");
+		//printf("===========================================================================================\n");
 
+		//mx_print_res(res);
+		//printf("===========================================================================================\n");
 	}
 	if (res == NULL) {
 		mx_memset(res, 0, sizeof(t_lst_res));
@@ -297,6 +321,89 @@ t_lst_res *mx_al(t_path *p, t_lst_res *l, int count, int z) {
 }
 
 
+t_lst_res *mx_sort_res1(t_lst_res *lst) {
+	bool sort = false;
+	t_lst_res *head = lst;
+
+	if (!lst)
+		return NULL;
+	while (sort == false) {
+		sort = true;
+		while (lst->next) {
+			if (lst->road[lst->len - 1] > lst->next->road[lst->next->len - 1]) {
+				swap_intarr(&lst->road_dist, &lst->next->road_dist);
+				swap_intarr(&lst->road, &lst->next->road);
+				swap_int(&lst->sum_dist, &lst->next->sum_dist);
+				swap_int(&lst->len, &lst->next->len);
+				sort = false;
+			}
+			lst = lst->next;
+		}
+		lst = head;
+	}
+	return lst;
+}
+
+t_lst_res *mx_sort_res2(t_lst_res *lst) {
+	bool sort = false;
+	t_lst_res *head = lst;
+
+	if (!lst)
+		return NULL;
+	while (sort == false) {
+		sort = true;
+		while (lst->next) {
+			if (lst->len - 1 > lst->next->len - 1) {
+				swap_intarr(&lst->road_dist, &lst->next->road_dist);
+				swap_intarr(&lst->road, &lst->next->road);
+				swap_int(&lst->sum_dist, &lst->next->sum_dist);
+				swap_int(&lst->len, &lst->next->len);
+				sort = 1;
+			}
+			lst = lst->next;
+		}
+		lst = head;
+	}
+	return lst;
+}
+
+
+t_lst_res *mx_sort_res3(t_lst_res *lst) {
+	// bool sort = false;
+	// t_lst_res *head = lst;
+
+	// if (!lst)
+	// 	return NULL;
+	// while (sort == false) {
+	// 	sort = true;
+	int i = 0;
+	int size = list_size_res(lst);
+	t_lst_res *new = lst;
+
+	if (i != size - 1)
+		while (i < size) {
+			if (lst->road[0] == lst->next->road[0] 
+				&& lst->road[lst->len - 1] == lst->next->road[lst->next->len - 1]) {
+				while (lst->road[i] == lst->next->road[i])
+					i++;
+				if (lst->road[i] > lst->next->road[i]) {
+					swap_intarr(&lst->road_dist, &lst->next->road_dist);
+					swap_intarr(&lst->road, &lst->next->road);
+					swap_int(&lst->sum_dist, &lst->next->sum_dist);
+					swap_int(&lst->len, &lst->next->len);
+				}
+			}
+			lst = lst->next;
+			i++;
+			if (i == size - 1) {
+				lst = new;
+				i = 0;
+				size--;
+			}
+		}
+
+	return lst;
+}
 
 //*********************************************************
 
@@ -310,6 +417,7 @@ static int index_point(t_path *p, char *point, int count) {
 	return index_point;
 }
 
+
 static bool new_island(char *str, t_path *p, int count) {
 	for (int i = 0; i < count; i++) {
 		if (mx_strcmp(str, p[i].name) == 0)
@@ -317,6 +425,7 @@ static bool new_island(char *str, t_path *p, int count) {
 	}
 	return true;
 }
+
 
 static void connect_count(t_path *p, char *fl, char **WordsA, int count) {
 	for (int j = 0; j < count; j++) {
@@ -341,69 +450,7 @@ static void connect_count(t_path *p, char *fl, char **WordsA, int count) {
 	}
 }
 
-//***********************ПРОВЕРКА_КОЛ-ВО_ВЕРШИН*****************************************
 
-// t_valid *mx_create_node1(void *data, int j) {
-//     t_valid *node = malloc(sizeof(t_valid));
-
-//     if (!node)
-//         return NULL;
-//     node->name = data;
-//     node->index_name = j;
-//     node->next = NULL;
-//     return node;
-// }
-
-// void mx_push_back1(t_valid **list, void *data, int i) {
-//     t_valid *pl = *list;
-//  	t_valid *node = mx_create_node1(data, i);
-
-//     if (pl == NULL) {
-//     	*list = node;
-//         return ;
-//     }
-//     while (pl->next != NULL) {
-//         pl = pl->next;
-//     }
-//     pl->next = node;
-// }
-
-
-// static void mx_islands_check(char **WordsA, int count) {
-// 	char **str1;
-// 	char **str2;
-// 	t_valid *p;
-// 	int j = 0;
-// 	char *name;
-
-// 	for(int i = 1; WordsA[i]; i++) {
-// 		str1 = mx_strsplit(WordsA[i], '-');
-// 		str2 = mx_strsplit(str1[1], ',');
-// 		if (new_island(str1[0], p, j)) {
-// 			name = mx_strdup(str1[0]);
-// 			j++;
-// 			if (j == 0)
-// 				p = mx_create_node1(name, j);
-// 			else
-// 				mx_push_back1(&p, name, j);
-// 		}
-// 		if (new_island(str2[0], p, j)) {
-// 			name = mx_strdup(str1[0]);
-// 			j++;
-// 			mx_push_back1(&p, name, j);
-// 		}
-// 		free(name);
-// 		p = p->next;
-// 		double_del_arr(str1, str2);
-// 	}
-// 	if (j != count) {
-// 		mx_printerr("error: invalid number of islands\n");
-// 		system("leaks -q a.out");
-// 		exit(0);
-// 	}
-// }
-
-//***************************************************************************************
 
 static void mx_islands(t_path *p, char *fl, char **WordsA, int count) {
 	char **str1;
@@ -425,6 +472,7 @@ static void mx_islands(t_path *p, char *fl, char **WordsA, int count) {
 	}
 }
 
+
 static void print_island_struct(t_path *p, int count) {
 	for (int i = 0; i < count; i++) {
 		printf("\n");
@@ -436,6 +484,43 @@ static void print_island_struct(t_path *p, int count) {
 				p[i].d[j].point, p[i].d[j].index_point, p[i].d[j].dist);
 		}
 		printf("$*********END ISLAND***********$\n\n");
+	}
+}
+
+void mx_vivod(t_lst_res *lst, t_path *p, int count) {
+	while (lst) {
+		mx_printstr(RAVNO);
+		mx_printstr("Path: ");
+		mx_printstr(p[lst->road[0]].name);
+		mx_printstr(" -> ");
+		mx_printstr(p[lst->road[lst->len - 1]].name);
+		mx_printchar('\n');
+		mx_printstr("Route: ");
+		for (int i = 0; i < lst->len; i++) {
+			mx_printstr(p[lst->road[i]].name);
+			if (i != lst->len - 1)
+				mx_printstr(" -> ");
+		}
+		mx_printchar('\n');
+		mx_printstr("Distance: ");	
+		char *tmp;
+
+		if (lst->len - 1 != 1) {
+			for (int i = 0; i < lst->len - 1; i++) {
+				tmp = mx_itoa(lst->road_dist[i]);
+				mx_printstr(tmp);
+				free(tmp);
+				if (i != lst->len - 2)
+					mx_printstr(" + ");
+			}
+			mx_printstr(" = ");
+		}
+		tmp = mx_itoa(lst->sum_dist);
+		mx_printstr(tmp);
+		free(tmp);
+		mx_printchar('\n');
+		mx_printstr(RAVNO);
+		lst = lst->next;
 	}
 }
 
@@ -452,14 +537,22 @@ int main(int ac, char **av) {
 	t_lst_res **l = (t_lst_res **)malloc(sizeof(t_lst_res *) * count);
 	t_lst_res **res = (t_lst_res **)malloc(sizeof(t_lst_res *) * count);
 	for (int i = 0; i < count; i++) {
+	
 		l[i] = first_itter(p, i);
+	// printf("*************** I = %d ********************\n", i);
 		res[i] = mx_al(p, l[i], count, i);
-		mx_print_res(res[i]);
+		mx_sort_res2(res[i]);
+		mx_sort_res1(res[i]);
+		mx_sort_res3(res[i]);
+		 //mx_print_res(res[i]);
+		mx_vivod(res[i], p, count);
 	}
-	//print_island_struct(p, count);
+	// print_island_struct(p, count);
 	free(fl);
 	mx_del_strarr(&WordsA);
-	
-	system("leaks -q a.out");
+	// for (int i = 0; i < count; i++) {
+	// 	mx_vivod(res[i], p, count);
+	// }
+	// system("leaks -q a.out");
 	return 0;
 }
