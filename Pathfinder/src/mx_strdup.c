@@ -3,9 +3,9 @@
 char *mx_strdup(const char *str) {
 	char *dup;
 	
-	dup = mx_strnew(mx_strlen(str));
 	if (str == NULL)
 		return NULL;
+	dup = mx_strnew(mx_strlen(str));
 
 	if (dup == NULL)
 		return NULL;

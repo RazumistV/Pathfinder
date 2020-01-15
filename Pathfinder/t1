@@ -54,11 +54,6 @@ Route: BusStop -> Work
 Distance: 7
 ========================================
 ========================================
-Path: BusStop -> Taxi
-Route: BusStop -> Home -> Taxi
-Distance: 4 + 1 = 5
-========================================
-========================================
 Path: BusStop -> Metro
 Route: BusStop -> Home -> Metro
 Distance: 4 + 6 = 10
@@ -94,11 +89,6 @@ Route: Work -> Metro -> Park
 Distance: 8 + 16 = 24
 ========================================
 ========================================
-Path: Taxi -> Metro
-Route: Taxi -> Home -> Metro
-Distance: 1 + 6 = 7
-========================================
-========================================
 Path: Taxi -> Gym
 Route: Taxi -> Work -> Gym
 Distance: 10 + 2 = 12
@@ -117,11 +107,6 @@ Distance: 1 + 4 + 18 = 23
 Path: Taxi -> Park
 Route: Taxi -> Home -> Metro -> Park
 Distance: 1 + 6 + 16 = 23
-========================================
-========================================
-Path: Metro -> Gym
-Route: Metro -> Work -> Gym
-Distance: 8 + 2 = 10
 ========================================
 ========================================
 Path: Metro -> Park

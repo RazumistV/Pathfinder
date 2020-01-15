@@ -46,15 +46,14 @@ echo test12 hardest
 ./a.out hardest > ./res/res.txt
 diff ./res/tst12.txt ./res/res.txt
 
+echo test13 in7
+./a.out in7.txt > ./res/res.txt
+diff ./res/out7.txt ./res/res.txt
 
-#echo test13 in7
-#./a.out in7.txt > ./res/res.txt
-#diff ./res/out7.txt ./res/res.txt
+echo test14 in8
+./a.out in8.txt > ./res/res.txt
+diff ./res/out8.txt ./res/res.txt
 
-#echo test14 in8
-#./a.out in8.txt > ./res/res.txt
-#diff ./res/out8.txt ./res/res.txt
-
-#echo test13 in9
-#./a.out in9.txt 2> ./res/res.txt
-#diff ./res/out9.txt ./res/res.txt
+echo test13 in9
+./a.out in9.txt > ./res/res.txt
+diff ./res/out9.txt ./res/res.txt
