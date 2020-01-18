@@ -37,14 +37,18 @@ typedef struct s_lst_res {
 	struct s_lst_res *next;
 } t_lst_res;
 
-t_lst_res	*mx_al(t_path *p, t_lst_res *l, int count, int itter);
+t_lst_res	*mx_al(t_path *p, t_lst_res *l
+			, int count, int itter);
 t_lst_res 	*mx_sort_list_res(t_lst_res *lst);
-t_lst_res	*mx_create_list_res(int *road, int *road_dist, int sum_dist, int len);
+t_lst_res	*mx_create_list_res(int *road, int *road_dist
+			, int sum_dist, int len);
 t_lst_res 	*mx_sort_res1(t_lst_res *lst);
 t_lst_res 	*mx_sort_res2(t_lst_res *lst);
 t_lst_res 	*first_itter(t_path *p , int count );
-void		mx_create_active_list(t_lst_res *l, t_path p, bool *ative);
-void		mx_connect_count(t_path *p, char *fl, char **WordsA, int count);
+void		mx_create_active_list(t_lst_res *l, t_path p
+			, bool *ative);
+void		mx_connect_count(t_path *p, char *fl, char **WordsA
+			, int count);
 void		mx_push_back_res(t_lst_res **list, int *road, int count
 			, int *road_dist, int dist);
 void 		mx_pop_front_res(t_lst_res **lst);
@@ -61,15 +65,17 @@ void 		mx_pop_elem_of_lst(t_lst_res *lst);
 void 		mx_sort_res3(t_lst_res *lst);
 void 		mx_print_errors(char *av, char **WordsA);
 void 		mx_vivod(t_lst_res *lst, t_path *p);
-void 		mx_vivod_sort_lst(t_lst_res **res, t_path *p, int count);
+void 		mx_vivod_sort_lst(t_lst_res **res
+			, t_path *p, int count);
 void 		swap_int(int *lst1, int *lst2);
 void 		swap_intarr(int **lst1, int **lst2);
 void 		mx_swap_res(t_lst_res *lst);
 void 		valid_island(char **WordsA);
 void 		print_routes(t_lst_res *lst, t_path *p);
-void 		is_folder(char *file);
+void 		mx_is_folder(char *file);
 void 		print_routes_distance(t_lst_res *lst);
 void 		mx_zero(char *s);
+void 		mx_is_not_exist(char *file);
 bool 		str_is_digit(char *str);
 bool 		mx_print_errors2(int ac, char *av);
 int 		list_size_res(t_lst_res *list);

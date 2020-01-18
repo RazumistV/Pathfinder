@@ -16,9 +16,7 @@ void valid_island(char **WordsA) {
 
 		if (str[0] == NULL || mx_arrlen(str) < 2) {
 			char *num = mx_itoa(i + 1);
-			mx_printerr(LINE_VALUE);
-			mx_printerr(num);
-			mx_printerr(LINE_VALUE2);
+			mx_print_inval(num);
 			mx_del_strarr(&str);
 			exit (0);
 		}
@@ -26,9 +24,7 @@ void valid_island(char **WordsA) {
 
 		if (str2[0] == NULL || mx_arrlen(str2) < 2) {
 			char *num = mx_itoa(i + 1);
-			mx_printerr(LINE_VALUE);
-			mx_printerr(num);
-			mx_printerr(LINE_VALUE2);
+			mx_print_inval(num);
 			mx_del_strarr(&str2);
 			exit (0);
 		}

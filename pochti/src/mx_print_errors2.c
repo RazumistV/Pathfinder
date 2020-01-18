@@ -3,12 +3,11 @@
 static void argument(int ac);
 static void is_empty(char *file);
 static void is_empty2(char *file);
-static void is_not_exist(char *file);
 
 bool mx_print_errors2(int ac, char *av) {
 		argument(ac);
-		is_not_exist(av);
-		is_folder(av);
+		mx_is_not_exist(av);
+		mx_is_folder(av);
 		is_empty(av);
 		is_empty2(av);
 		return true;
@@ -60,15 +59,4 @@ static void is_empty2(char *file) {
 	}
 }
 
-static void is_not_exist(char *file) {
-	int fd = open(file, O_RDONLY);
-
-	if (fd < 0) {
-		close(fd);
-		mx_printerr(FILE_EXIST);
-		mx_printerr(file);
-		mx_printerr(FILE_EXIST2);
-		exit (0);
-	}
-}
 

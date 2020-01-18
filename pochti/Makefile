@@ -29,6 +29,7 @@ SRC  =  main.c \
 		mx_validator.c \
 		mx_is_folder.c \
 		mx_zero.c \
+		mx_is_not_exist.c \
 
 
 

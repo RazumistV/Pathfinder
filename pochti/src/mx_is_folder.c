@@ -1,6 +1,6 @@
 #include "pathfinder.h"
 
-void is_folder(char *file) {
+void mx_is_folder(char *file) {
 	int fd = open(file, O_RDONLY);
 
 	if (read(fd, (void *)0, 0) < 0) {

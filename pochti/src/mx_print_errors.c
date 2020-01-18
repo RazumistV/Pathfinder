@@ -9,16 +9,15 @@ bool str_is_digit(char *str) {
 		if (!mx_isdigit(str[i]))
 			return false;
 	}
-	// system("leaks -q pathfinder");
-	return true;
+		return true;
 }
 
 void mx_print_errors(char *av, char **WordsA) {
 		apex_count(WordsA);
 		mx_apex_ne_char(WordsA);
 		mx_b_slash_n(av);
-		mx_zero(av);
 		mx_apex_repeat(WordsA);
+		mx_zero(av);
 		validator_znakov(WordsA);
 		range_validator(WordsA);
 		valid_apex(WordsA);
